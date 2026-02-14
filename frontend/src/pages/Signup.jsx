@@ -1,98 +1,143 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { Truck, ShieldCheck } from 'lucide-react';
+import { useWindowWidth, colors } from '../utils';
 
 const Signup = () => {
   const navigate = useNavigate();
+  const width = useWindowWidth();
+  const isMobile = width < 768;
+  const [hover, setHover] = useState(false);
 
   const styles = {
     container: {
-      padding: '60px 40px',
-      height: '100vh',
       display: 'flex',
+      height: '100vh',
+      backgroundColor: colors.surface,
+      fontFamily: "'Inter', sans-serif",
+    },
+    leftPanel: {
+      flex: 1,
+      backgroundColor: colors.primaryDark,
+      display: isMobile ? 'none' : 'flex',
       flexDirection: 'column',
       justifyContent: 'center',
+      alignItems: 'center',
+      color: 'white',
+      padding: '40px',
+      position: 'relative'
+    },
+    rightPanel: {
+      flex: 1,
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      padding: '40px',
+      backgroundColor: colors.background
+    },
+    formBox: {
+      width: '100%',
       maxWidth: '450px',
-      margin: '0 auto',
-      backgroundColor: '#fff'
+      backgroundColor: colors.surface,
+      padding: '40px',
+      borderRadius: '16px',
+      boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+      border: `1px solid ${colors.border}`
     },
-    title: {
-      fontSize: '24px',
-      fontWeight: '800',
-      textTransform: 'uppercase',
-      letterSpacing: '-1px',
-      marginBottom: '8px'
-    },
-    form: { marginTop: '40px' },
-    inputGroup: { marginBottom: '24px' },
-    label: {
-      display: 'block',
-      fontSize: '9px',
-      fontWeight: '700',
-      textTransform: 'uppercase',
-      color: '#888',
-      marginBottom: '6px'
-    },
+    title: { fontSize: '28px', fontWeight: '800', color: colors.textMain, marginBottom: '8px' },
+    subtitle: { fontSize: '14px', color: colors.secondary, marginBottom: '32px' },
+    
+    inputGroup: { marginBottom: '20px' },
+    label: { display: 'block', fontSize: '12px', fontWeight: '600', color: colors.textMain, marginBottom: '6px' },
     input: {
       width: '100%',
-      border: '1px solid #f0f0f0',
-      backgroundColor: '#f9f9f9',
-      padding: '14px',
-      fontSize: '13px',
+      padding: '12px',
+      borderRadius: '8px',
+      border: `1px solid ${colors.border}`,
+      fontSize: '14px',
       outline: 'none',
-      boxSizing: 'border-box'
+      backgroundColor: '#F8FAFC',
+      transition: 'border-color 0.2s'
     },
     button: {
       width: '100%',
-      backgroundColor: '#000',
-      color: '#fff',
-      padding: '20px',
-      fontSize: '11px',
-      fontWeight: '700',
-      textTransform: 'uppercase',
-      marginTop: '20px',
+      padding: '16px',
+      backgroundColor: hover ? colors.primaryDark : colors.primary,
+      color: 'white',
+      border: 'none',
+      borderRadius: '8px',
+      fontWeight: '600',
       cursor: 'pointer',
-      border: 'none'
+      marginTop: '12px',
+      transition: 'background-color 0.2s',
+      fontSize: '14px'
     },
-    backLink: {
-      marginTop: '32px',
-      textAlign: 'center',
-      fontSize: '10px',
-      textTransform: 'uppercase',
-      color: '#888',
-      textDecoration: 'none',
-      display: 'block',
-      fontWeight: '600'
-    }
+    footer: { marginTop: '24px', textAlign: 'center', fontSize: '13px', color: colors.secondary },
+    link: { color: colors.primary, fontWeight: '600', textDecoration: 'none', marginLeft: '5px' }
   };
 
   return (
-    <motion.div 
-      style={styles.container}
-      initial={{ opacity: 0, x: 10 }} 
-      animate={{ opacity: 1, x: 0 }}
-    >
-      <h1 style={styles.title}>Create Entity.</h1>
-      <p style={{fontSize: '11px', color: '#888', textTransform: 'uppercase'}}>Client Registration</p>
-      
-      <form style={styles.form} onSubmit={(e) => { e.preventDefault(); navigate('/home'); }}>
-        <div style={styles.inputGroup}>
-          <label style={styles.label}>Corporate Name</label>
-          <input type="text" style={styles.input} required />
+    <div style={styles.container}>
+      {/* Left Branding Panel */}
+      <div style={styles.leftPanel}>
+        <div style={{ backgroundColor: 'rgba(255,255,255,0.1)', padding: '20px', borderRadius: '50%', marginBottom: '20px' }}>
+            <ShieldCheck size={48} color="white" />
         </div>
-        <div style={styles.inputGroup}>
-          <label style={styles.label}>Operational Email</label>
-          <input type="email" style={styles.input} required />
-        </div>
-        <div style={styles.inputGroup}>
-          <label style={styles.label}>Master Password</label>
-          <input type="password" style={styles.input} required />
-        </div>
-        <button type="submit" style={styles.button}>Confirm Profile</button>
-      </form>
+        <h1 style={{ fontSize: '32px', fontWeight: 'bold' }}>Join the Network.</h1>
+        <p style={{ opacity: 0.8, marginTop: '12px', textAlign: 'center', maxWidth: '400px', lineHeight: '1.6' }}>
+          Create your corporate profile to access real-time tracking, automated billing, and our premium fleet.
+        </p>
+      </div>
 
-      <Link to="/" style={styles.backLink}>← Return to Login</Link>
-    </motion.div>
+      {/* Right Form Panel */}
+      <div style={styles.rightPanel}>
+        <motion.div 
+          style={styles.formBox}
+          initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }}
+        >
+          <h2 style={styles.title}>New Entity Registration</h2>
+          <p style={styles.subtitle}>Enter your company details to verify your account.</p>
+
+          <form onSubmit={(e) => { e.preventDefault(); navigate('/home'); }}>
+            <div style={styles.inputGroup}>
+              <label style={styles.label}>Corporate Name</label>
+              <input type="text" style={styles.input} placeholder="e.g. Apex Logistics Ltd." required />
+            </div>
+
+            <div style={styles.inputGroup}>
+              <label style={styles.label}>Operational Email</label>
+              <input type="email" style={styles.input} placeholder="admin@apexlogistics.com" required />
+            </div>
+
+            <div style={{ display: 'flex', gap: '16px' }}>
+                <div style={styles.inputGroup}>
+                <label style={styles.label}>Password</label>
+                <input type="password" style={styles.input} placeholder="••••••••" required />
+                </div>
+                <div style={styles.inputGroup}>
+                <label style={styles.label}>Confirm Password</label>
+                <input type="password" style={styles.input} placeholder="••••••••" required />
+                </div>
+            </div>
+
+            <button 
+              type="submit" 
+              style={styles.button}
+              onMouseEnter={() => setHover(true)}
+              onMouseLeave={() => setHover(false)}
+            >
+              Create Account
+            </button>
+          </form>
+
+          <div style={styles.footer}>
+            Already have an ID? 
+            <Link to="/" style={styles.link}>Login here</Link>
+          </div>
+        </motion.div>
+      </div>
+    </div>
   );
 };
 
