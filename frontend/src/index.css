@@ -1,12 +1,6 @@
 /* Import Inter Font from Google */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
-:root {
-  /* We are primarily using JS variables in utils.js, but these act as a fallback */
-  --bg-color: #F8FAFC;
-  --text-main: #0F172A;
-}
-
 * {
   margin: 0;
   padding: 0;
@@ -14,9 +8,16 @@
   -webkit-tap-highlight-color: transparent;
 }
 
-body {
-  background-color: var(--bg-color);
-  color: var(--text-main);
+/* THIS IS THE CRITICAL FIX: 
+  Force the html, body, and Vite's #root element to span exactly 100% of the screen width 
+*/
+html, body, #root {
+  width: 100vw;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  background-color: #F8FAFC;
+  color: #0F172A;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -30,20 +31,20 @@ button {
   font-family: inherit;
 }
 
-input {
+input, textarea {
   font-family: inherit;
 }
 
-/* Custom Scrollbar for Webkit browsers */
+/* Custom Enterprise Scrollbar */
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 8px;
 }
 ::-webkit-scrollbar-track {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
   background: #CBD5E1;
-  border-radius: 3px;
+  border-radius: 10px;
 }
 ::-webkit-scrollbar-thumb:hover {
   background: #94A3B8;

@@ -6,8 +6,7 @@ export const useWindowWidth = () => {
   useEffect(() => {
     const handleResize = () => setWidth(window.innerWidth);
     window.addEventListener('resize', handleResize);
-    // Trigger once on mount to ensure correct mode
-    handleResize(); 
+    handleResize(); // Trigger on mount
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
